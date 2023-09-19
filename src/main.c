@@ -1,6 +1,11 @@
 #include "chip8.h"
+
+Chip8* chip8;
+
+
 int main()
 {
-    loadRom("src/slipperyslope.ch8");
+    loadFont(&chip8);
+    //loadRom(chip8,"src/slipperyslope.ch8");
     return 0;
 }
