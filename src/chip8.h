@@ -15,5 +15,5 @@ unsigned char opcode;
 
 void loadRom(Chip8* chip8,const char *file_name);
 void loadFont(Chip8* chip8);
-
+void initSystem(Chip8* chip8);
 #endif
