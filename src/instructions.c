@@ -27,8 +27,3 @@ void OP_2NNN(Chip8* chip8)
     chip8->sp++;
     chip8->pc=address;
 }
-
-void OP_00E0(Chip8* chip8)
-{
-    //CLS
-}
