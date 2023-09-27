@@ -1,5 +1,6 @@
 #include "chip8.h"
 #include <stdio.h>
+#include <stdlib.h>
 
 const unsigned short rom_start_add = 0x200;
 const unsigned short font_start_add = 0x50;
@@ -56,6 +57,14 @@ void loadFont(Chip8* chip8)
         chip8->memory[font_start_add+i]=fontset[i];
     }
     printf("Loading fontset process done!\n");
+}
+
+unsigned short randNumGen()
+{
+    //Random number between 0-256;
+
+    unsigned short randomNumber = rand() % 256;
+    return randomNumber;
 }
 
 void initSystem(Chip8* chip8)
