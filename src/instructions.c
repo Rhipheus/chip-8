@@ -223,3 +223,11 @@ void OP_Cxkk(Chip8* chip8)
 
     chip8->registers[Vx] = (randNumGen() & kk);
 }
+
+void OP_Fx1E(Chip8* chip8)
+{
+    //Set I = I + Vx.
+    unsigned short Vx = (chip8->opcode & 0x0F00u) >> 8u;
+
+    chip8->index += chip8->registers[Vx];
+}
