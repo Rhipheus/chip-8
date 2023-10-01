@@ -1,4 +1,7 @@
 #include "chip8.h"
+#define SCREEN_SCALE 10
+#define SCREEN_WIDTH 64
+#define SCREEN_HEIGHT 32
 
 void OP_00E0(Chip8* chip8)
 {
@@ -222,6 +225,43 @@ void OP_Cxkk(Chip8* chip8)
 	unsigned short kk = chip8->opcode & 0x00FFu;
 
     chip8->registers[Vx] = (randNumGen() & kk);
+}
+
+void OP_Dxyn(Chip8* chip8)
+{
+    unsigned short Vx = (chip8->opcode & 0x0F00u) >> 8u;
+	unsigned short Vy = (chip8->opcode & 0x00F0u) >> 4u;
+	unsigned short height = chip8->opcode & 0x000Fu;
+
+	// Wrap if going beyond screen boundaries
+	unsigned short xPos = chip8->registers[Vx] % SCREEN_WIDTH*SCREEN_SCALE; //CHECK SCALE
+	unsigned short yPos = chip8->registers[Vy] % SCREEN_HEIGHT*SCREEN_SCALE; //CHECK SCALE
+
+	chip8->registers[0xF] = 0;
+
+	for (unsigned int row = 0; row < height; ++row)
+	{
+		unsigned short spriteByte = chip8->memory[chip8->index + row];
+
+		for (unsigned int col = 0; col < 8; ++col)
+		{
+			unsigned short spritePixel = spriteByte & (0x80u >> col);
+			unsigned int* screenPixel = chip8->screen[(yPos + row) * SCREEN_WIDTH + (xPos + col)]; // CHECK WIDTH
+
+			// Sprite pixel is on
+			if (spritePixel)
+			{
+				// Screen pixel also on - collision
+				if (*screenPixel == 0xFFFFFFFF)
+				{
+					chip8->registers[0xF] = 1;
+				}
+
+				// Effectively XOR with the sprite pixel
+				*screenPixel ^= 0xFFFFFFFF;
+			}
+		}
+	}
 }
 
 void OP_Fx1E(Chip8* chip8)

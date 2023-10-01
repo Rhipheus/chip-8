@@ -11,6 +11,9 @@ unsigned short pc;
 unsigned char index;
 unsigned short screen[64 * 32];
 unsigned char opcode;
+unsigned short keypad[16];
+unsigned short delayTimer;
+unsigned short soundTimer;
 }Chip8;
 
 void loadRom(Chip8* chip8,const char *file_name);
