@@ -229,6 +229,7 @@ void OP_Cxkk(Chip8* chip8)
 
 void OP_Dxyn(Chip8* chip8)
 {
+    //Display n-byte sprite starting at memory location I at (Vx, Vy), set VF = collision.
     unsigned short Vx = (chip8->opcode & 0x0F00u) >> 8u;
 	unsigned short Vy = (chip8->opcode & 0x00F0u) >> 4u;
 	unsigned short height = chip8->opcode & 0x000Fu;
@@ -264,10 +265,119 @@ void OP_Dxyn(Chip8* chip8)
 	}
 }
 
+void OP_Ex9E(Chip8* chip8)
+{
+    //Skip next instruction if key with the value of Vx is pressed.
+	unsigned short Vx = (chip8->opcode & 0x0F00u) >> 8u;
+
+	unsigned short key = chip8->registers[Vx];
+
+	if (chip8->keypad[key])
+	{
+		chip8->pc += 2;
+	}
+}
+
+void OP_ExA1(Chip8* chip8)
+{
+    //Skip next instruction if key with the value of Vx is not pressed.
+	unsigned short Vx = (chip8->opcode & 0x0F00u) >> 8u;
+
+	unsigned short key = chip8->registers[Vx];
+
+	if (!chip8->keypad[key])
+	{
+		chip8->pc += 2;
+	}
+}
+
+void OP_Fx07(Chip8* chip8)
+{
+    //Set Vx = delay timer value.
+	unsigned short Vx = (chip8->opcode & 0x0F00u) >> 8u;
+	chip8->registers[Vx] = chip8->delayTimer;
+}
+
+void OP_Fx0A(Chip8* chip8)
+{
+    //Wait for a key press, store the value of the key in Vx.
+	unsigned short Vx = (chip8->opcode & 0x0F00u) >> 8u;
+
+	unsigned short key = chip8->registers[Vx];
+
+	if (!chip8->keypad[key])
+	{
+		chip8->pc += 2;
+	}
+}
+
+void OP_Fx15(Chip8* chip8)
+{
+    //Set delay timer = Vx.
+	unsigned short Vx = (chip8->opcode & 0x0F00u) >> 8u;
+	chip8->delayTimer = chip8->registers[Vx];
+}
+
+void OP_Fx18(Chip8* chip8)
+{
+    //Set Vx = delay timer value.
+	unsigned short Vx = (chip8->opcode & 0x0F00u) >> 8u;
+	chip8->soundTimer = chip8->registers[Vx];
+}
+
 void OP_Fx1E(Chip8* chip8)
 {
     //Set I = I + Vx.
     unsigned short Vx = (chip8->opcode & 0x0F00u) >> 8u;
 
     chip8->index += chip8->registers[Vx];
+}
+
+void OP_Fx29(Chip8* chip8)
+{
+    //Set I = location of sprite for digit Vx.
+    unsigned short Vx = (chip8->opcode & 0x0F00u) >> 8u;
+    unsigned short digit = chip8->registers[Vx];
+    chip8->index = 0x50 + (5*digit); //FONTSE_START_ADDRESS HARDCODED!
+}
+
+void OP_Fx33(Chip8* chip8)
+{
+    //Store BCD representation of Vx in memory locations I, I+1, and I+2.
+    unsigned short Vx = (chip8->opcode & 0x0F00u) >> 8u;
+	unsigned short value = chip8->registers[Vx];
+
+	// Ones-place
+	chip8->memory[chip8->index + 2] = value % 10;
+	value /= 10;
+
+	// Tens-place
+	chip8->memory[chip8->index + 1] = value % 10;
+	value /= 10;
+
+	// Hundreds-place
+	chip8->memory[chip8->index] = value % 10;
+}
+
+void OP_Fx55(Chip8* chip8)
+{
+    //Store registers V0 through Vx in memory starting at location I.
+    unsigned short Vx = (chip8->opcode & 0x0F00u) >> 8u;
+	unsigned short value = chip8->registers[Vx];
+
+	for (unsigned short i = 0; i <= Vx; ++i)
+	{
+		chip8->memory[chip8->index + i] = chip8->registers[i];
+	}
+}
+
+void OP_Fx65(Chip8* chip8)
+{
+    //Store registers V0 through Vx in memory starting at location I.
+    unsigned short Vx = (chip8->opcode & 0x0F00u) >> 8u;
+
+	for (unsigned short i = 0; i <= Vx; ++i)
+	{
+		chip8->registers[i] = chip8->memory[chip8->index + i];
+	}
 }
