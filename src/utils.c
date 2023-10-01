@@ -7,13 +7,14 @@ int scale=10;
 
 SDL_Window* win;
 SDL_Renderer* renderer;
+SDL_Texture* texture;
 
 unsigned short keyboard[16] = { 2,3,4,5,
                                 16,17,18,19,
                                 30,31,32,33,
                                 44,45,46,47};
 
-int initWindow(Chip8* chip8)
+int initWindow(Chip8* chip8,int textureWidth,int textureHeight)
 {
      if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
         printf("error initializing SDL: %s\n", SDL_GetError());
@@ -37,9 +38,22 @@ int initWindow(Chip8* chip8)
         printf("error creating SDL renderer: %s\n", SDL_GetError());
         return 0;
     }
-
+    texture = SDL_CreateTexture(
+			renderer, 
+            SDL_PIXELFORMAT_RGBA8888, 
+            SDL_TEXTUREACCESS_STREAMING, 
+            textureWidth, 
+            textureHeight);
     return 1;
 }
+
+void Update(void const* buffer, int pitch)
+	{
+		SDL_UpdateTexture(texture, NULL, buffer, pitch);
+		SDL_RenderClear(renderer);
+		SDL_RenderCopy(renderer, texture, NULL, NULL);
+		SDL_RenderPresent(renderer);
+	}
 
 void destroyWindow()
 {

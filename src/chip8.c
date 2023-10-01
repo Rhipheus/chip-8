@@ -66,9 +66,3 @@ unsigned short randNumGen()
     unsigned short randomNumber = rand() % 256;
     return randomNumber;
 }
-
-void initSystem(Chip8* chip8)
-{
-    printf("Initializing system...\n");
-    chip8->pc=rom_start_add;
-}

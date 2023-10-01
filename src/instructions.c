@@ -6,6 +6,11 @@
 void OP_00E0(Chip8* chip8)
 {
     //CLS
+    for (unsigned int i = 0; i < SCREEN_HEIGHT*SCREEN_WIDTH; i++)
+    {
+        chip8->screen[i]=0;
+    }
+    
 }
 
 void OP_00EE(Chip8* chip8)
@@ -303,11 +308,73 @@ void OP_Fx0A(Chip8* chip8)
     //Wait for a key press, store the value of the key in Vx.
 	unsigned short Vx = (chip8->opcode & 0x0F00u) >> 8u;
 
-	unsigned short key = chip8->registers[Vx];
-
-	if (!chip8->keypad[key])
+    if (chip8->keypad[0])
 	{
-		chip8->pc += 2;
+		chip8->registers[Vx] = 0;
+	}
+	else if (chip8->keypad[1])
+	{
+		chip8->registers[Vx] = 1;
+	}
+	else if (chip8->keypad[2])
+	{
+		chip8->registers[Vx] = 2;
+	}
+	else if (chip8->keypad[3])
+	{
+		chip8->registers[Vx] = 3;
+	}
+	else if (chip8->keypad[4])
+	{
+		chip8->registers[Vx] = 4;
+	}
+	else if (chip8->keypad[5])
+	{
+		chip8->registers[Vx] = 5;
+	}
+	else if (chip8->keypad[6])
+	{
+		chip8->registers[Vx] = 6;
+	}
+	else if (chip8->keypad[7])
+	{
+		chip8->registers[Vx] = 7;
+	}
+	else if (chip8->keypad[8])
+	{
+		chip8->registers[Vx] = 8;
+	}
+	else if (chip8->keypad[9])
+	{
+		chip8->registers[Vx] = 9;
+	}
+	else if (chip8->keypad[10])
+	{
+		chip8->registers[Vx] = 10;
+	}
+	else if (chip8->keypad[11])
+	{
+		chip8->registers[Vx] = 11;
+	}
+	else if (chip8->keypad[12])
+	{
+		chip8->registers[Vx] = 12;
+	}
+	else if (chip8->keypad[13])
+	{
+		chip8->registers[Vx] = 13;
+	}
+	else if (chip8->keypad[14])
+	{
+		chip8->registers[Vx] = 14;
+	}
+	else if (chip8->keypad[15])
+	{
+		chip8->registers[Vx] = 15;
+	}
+	else
+	{
+		chip8->pc -= 2;
 	}
 }
 

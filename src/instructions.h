@@ -25,5 +25,16 @@ void OP_9xy0(Chip8* chip8);
 void OP_Annn(Chip8* chip8);
 void OP_Bnnn(Chip8* chip8);
 void OP_Cxkk(Chip8* chip8);
-
+void OP_Dxyn(Chip8* chip8);
+void OP_Ex9E(Chip8* chip8);
+void OP_ExA1(Chip8* chip8);
+void OP_Fx07(Chip8* chip8);
+void OP_Fx0A(Chip8* chip8);
+void OP_Fx15(Chip8* chip8);
+void OP_Fx18(Chip8* chip8);
+void OP_Fx1E(Chip8* chip8);
+void OP_Fx29(Chip8* chip8);
+void OP_Fx33(Chip8* chip8);
+void OP_Fx55(Chip8* chip8);
+void OP_Fx65(Chip8* chip8);
 #endif
