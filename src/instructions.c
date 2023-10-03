@@ -188,7 +188,7 @@ void OP_8xy7(Chip8* chip8)
     chip8->registers[Vx] = chip8->registers[Vy]-chip8->registers[Vx];
 }
 
-void OP_8xy8(Chip8* chip8)
+void OP_8xyE(Chip8* chip8)
 {
     //Set Vx = Vx SHL 1.
     unsigned short Vx = (chip8->opcode & 0x0F00u) >> 8u;

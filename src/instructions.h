@@ -20,7 +20,7 @@ void OP_8xy4(Chip8* chip8);
 void OP_8xy5(Chip8* chip8);
 void OP_8xy6(Chip8* chip8);
 void OP_8xy7(Chip8* chip8);
-void OP_8xy8(Chip8* chip8);
+void OP_8xyE(Chip8* chip8);
 void OP_9xy0(Chip8* chip8);
 void OP_Annn(Chip8* chip8);
 void OP_Bnnn(Chip8* chip8);

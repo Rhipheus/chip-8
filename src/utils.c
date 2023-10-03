@@ -23,8 +23,8 @@ int initWindow(Chip8* chip8,int textureWidth,int textureHeight)
     win = SDL_CreateWindow("GAME",
                             SDL_WINDOWPOS_CENTERED,
                             SDL_WINDOWPOS_CENTERED,
-                            chip8->screen[0]*scale, 
-                            chip8->screen[1]*scale, 
+                            64*scale, 
+                            32*scale, 
                             SDL_WINDOW_BORDERLESS);
     if(!win)
     {
