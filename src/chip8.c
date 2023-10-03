@@ -4,9 +4,9 @@
 #include <stdlib.h>
 
 
-const unsigned short rom_start_add = 0x200;
-const unsigned short font_start_add = 0x50;
-const unsigned short fontset_size = 80;
+const unsigned int rom_start_add = 0x200;
+const unsigned int font_start_add = 0x50;
+const unsigned int fontset_size = 80;
 
 unsigned char fontset[80] = // Hardcoded!
 {
@@ -38,7 +38,7 @@ void loadRom(Chip8* chip8,const char *file_name)
         fseek(file, 0, SEEK_END);
         int bufferSize = ftell(file);
         rewind(file);
-        for (unsigned short i = rom_start_add; i <bufferSize+rom_start_add; i++)
+        for (unsigned int i = rom_start_add; i <bufferSize+rom_start_add; i++)
         {
             chip8->memory[i]=getc(file);
         }
@@ -54,7 +54,7 @@ void loadRom(Chip8* chip8,const char *file_name)
 void loadFont(Chip8* chip8)
 {
     printf("Loading fontset to memory...\n");
-    for (unsigned short i = 0; i < fontset_size; i++)
+    for (unsigned int i = 0; i < fontset_size; i++)
     {
         chip8->memory[font_start_add+i]=fontset[i];
     }
@@ -194,9 +194,9 @@ void Cycle(Chip8* chip8)
     chip8->opcode = (chip8->memory[chip8->pc] << 8u) | chip8->memory[chip8->pc + 1];
     chip8->pc+=2;
 
+    loadInstructions(chip8);
 
-
-    if (chip8->delayTimer > 0)
+    /*if (chip8->delayTimer > 0)
 	{
 		--(chip8->delayTimer);
 	}
@@ -205,13 +205,13 @@ void Cycle(Chip8* chip8)
 	if (chip8->soundTimer > 0)
 	{
 		--(chip8->soundTimer);
-	}
+	}*/
 }
 
-unsigned short randNumGen()
+unsigned int randNumGen()
 {
     //Random number between 0-256;
 
-    unsigned short randomNumber = rand() % 256;
+    unsigned int randomNumber = rand() % 256;
     return randomNumber;
 }

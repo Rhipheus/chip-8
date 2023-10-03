@@ -2,14 +2,14 @@
 #include <SDL2/SDL.h>
 #include "chip8.h"
 
-int isRunning = 0;
+int isRunning = 1;
 int scale=10;
 
 SDL_Window* win;
 SDL_Renderer* renderer;
 SDL_Texture* texture;
 
-unsigned short keyboard[16] = { 2,3,4,5,
+unsigned int keyboard[16] = { 2,3,4,5,
                                 16,17,18,19,
                                 30,31,32,33,
                                 44,45,46,47};
@@ -62,10 +62,10 @@ void destroyWindow()
     SDL_Quit();
 }
 
-int findIndex(unsigned short arr[], int key)
+int findIndex(unsigned int arr[], int key)
 {
      
-    int arrLen = sizeof arr / sizeof arr[0];
+    int arrLen = 16;
     int index = -1;
      
     for (int i = 0; i < arrLen; i++) {
@@ -91,20 +91,24 @@ int handleInput(Chip8* chip8)
     {
     case SDL_QUIT:
         isRunning = 0;
+        destroyWindow();
         break;
     
     case SDL_KEYDOWN:
-
+        {
         int downindex = findIndex(keyboard,event.key.keysym.scancode);
         chip8->keypad[downindex]=1;
         if (event.key.keysym.scancode == 1)
         {
             isRunning = 0;
+            destroyWindow();
         }
-        
+        }
     case SDL_KEYUP:
+    {
         int upindex = findIndex(keyboard,event.key.keysym.scancode);
         chip8->keypad[upindex]=0;
+    }
     default:
         break;
     }
