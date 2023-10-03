@@ -9,10 +9,10 @@ SDL_Window* win;
 SDL_Renderer* renderer;
 SDL_Texture* texture;
 
-unsigned int keyboard[16] = { 2,3,4,5,
-                                16,17,18,19,
-                                30,31,32,33,
-                                44,45,46,47};
+unsigned int keyboard[16] = { 8,9,10,11,
+                                20,26,8,21,
+                                2,22,7,9,
+                                29,27,6,25};
 
 int initWindow(Chip8* chip8,int textureWidth,int textureHeight)
 {
@@ -25,7 +25,7 @@ int initWindow(Chip8* chip8,int textureWidth,int textureHeight)
                             SDL_WINDOWPOS_CENTERED,
                             64*scale, 
                             32*scale, 
-                            SDL_WINDOW_BORDERLESS);
+                            SDL_WINDOW_RESIZABLE);
     if(!win)
     {
         printf("error creating SDL window: %s\n", SDL_GetError());
@@ -76,6 +76,7 @@ int findIndex(unsigned int arr[], int key)
     }
      
     if (index > -1) {
+        printf("%d,",index);
         return index;
     } else {
         printf("%d is not present in this array.\n", key);

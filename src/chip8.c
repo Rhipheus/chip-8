@@ -196,7 +196,7 @@ void Cycle(Chip8* chip8)
 
     loadInstructions(chip8);
 
-    /*if (chip8->delayTimer > 0)
+    if (chip8->delayTimer > 0)
 	{
 		--(chip8->delayTimer);
 	}
@@ -205,7 +205,7 @@ void Cycle(Chip8* chip8)
 	if (chip8->soundTimer > 0)
 	{
 		--(chip8->soundTimer);
-	}*/
+	}
 }
 
 unsigned int randNumGen()
