@@ -64,7 +64,7 @@ void OP_5xy0(Chip8* chip8)
 {
     //Skip next instruction if Vx = Vy.
     unsigned int Vx = (chip8->opcode & 0x0F00u) >> 8u;
-	unsigned int Vy = (chip8->opcode & 0x00FFu) >> 4u;
+	unsigned int Vy = (chip8->opcode & 0x00F0u) >> 4u;
 
 	if (chip8->registers[Vx] = chip8->registers[Vy])
 	{
@@ -94,7 +94,7 @@ void OP_8xy0(Chip8* chip8)
 {
     //Set Vx = Vy.
     unsigned int Vx = (chip8->opcode & 0x0F00u) >> 8u;
-	unsigned int Vy = (chip8->opcode & 0x00FFu) >> 4u; 
+	unsigned int Vy = (chip8->opcode & 0x00F0u) >> 4u; 
 
     chip8->registers[Vx] = chip8->registers[Vy];
 }
@@ -103,7 +103,7 @@ void OP_8xy1(Chip8* chip8)
 {
     //Set Vx = Vx OR Vy.
     unsigned int Vx = (chip8->opcode & 0x0F00u) >> 8u;
-	unsigned int Vy = (chip8->opcode & 0x00FFu) >> 4u; 
+	unsigned int Vy = (chip8->opcode & 0x00F0u) >> 4u; 
 
     chip8->registers[Vx] |= chip8->registers[Vy];
 }
@@ -112,7 +112,7 @@ void OP_8xy2(Chip8* chip8)
 {
     //Set Vx = Vx AND Vy.
     unsigned int Vx = (chip8->opcode & 0x0F00u) >> 8u;
-	unsigned int Vy = (chip8->opcode & 0x00FFu) >> 4u; 
+	unsigned int Vy = (chip8->opcode & 0x00F0u) >> 4u; 
 
     chip8->registers[Vx] &= chip8->registers[Vy];
 }
@@ -121,7 +121,7 @@ void OP_8xy3(Chip8* chip8)
 {
     //Set Vx = Vx XOR Vy.
     unsigned int Vx = (chip8->opcode & 0x0F00u) >> 8u;
-	unsigned int Vy = (chip8->opcode & 0x00FFu) >> 4u; 
+	unsigned int Vy = (chip8->opcode & 0x00F0u) >> 4u; 
 
     chip8->registers[Vx] ^= chip8->registers[Vy];
 }
@@ -130,7 +130,7 @@ void OP_8xy4(Chip8* chip8)
 {
     //Set Vx = Vx + Vy, set VF = carry.
     unsigned int Vx = (chip8->opcode & 0x0F00u) >> 8u;
-	unsigned int Vy = (chip8->opcode & 0x00FFu) >> 4u; 
+	unsigned int Vy = (chip8->opcode & 0x00F0u) >> 4u; 
 
     unsigned int sum = chip8->registers[Vx] + chip8->registers[Vy];
     
@@ -149,7 +149,7 @@ void OP_8xy5(Chip8* chip8)
 {
     //Set Vx = Vx - Vy, set VF = NOT borrow.
     unsigned int Vx = (chip8->opcode & 0x0F00u) >> 8u;
-	unsigned int Vy = (chip8->opcode & 0x00FFu) >> 4u; 
+	unsigned int Vy = (chip8->opcode & 0x00F0u) >> 4u; 
     
     if (chip8->registers[Vx]>chip8->registers[Vy])
     {
@@ -175,7 +175,7 @@ void OP_8xy7(Chip8* chip8)
 {
     //Set Vx = Vy - Vx, set VF = NOT borrow.
     unsigned int Vx = (chip8->opcode & 0x0F00u) >> 8u;
-	unsigned int Vy = (chip8->opcode & 0x00FFu) >> 4u; 
+	unsigned int Vy = (chip8->opcode & 0x00F0u) >> 4u; 
     
     if (chip8->registers[Vy]>chip8->registers[Vx])
     {
@@ -201,7 +201,7 @@ void OP_9xy0(Chip8* chip8)
 {
     //Skip next instruction if Vx != Vy.
     unsigned int Vx = (chip8->opcode & 0x0F00u) >> 8u;
-	unsigned int Vy = (chip8->opcode & 0x00FFu) >> 4u;
+	unsigned int Vy = (chip8->opcode & 0x00F0u) >> 4u;
 
 	if (chip8->registers[Vx] != Vy)
 	{
@@ -245,11 +245,11 @@ void OP_Dxyn(Chip8* chip8)
 
 	chip8->registers[0xF] = 0;
 
-	for (unsigned int row = 0; row < height; ++row)
+	for (unsigned int row = 0; row < height; row++)
 	{
 		unsigned int spriteByte = chip8->memory[chip8->index + row];
 
-		for (unsigned int col = 0; col < 8; ++col)
+		for (unsigned int col = 0; col < 8; col++)
 		{
 			unsigned int spritePixel = spriteByte & (0x80u >> col);
 			unsigned int* screenPixel = &chip8->screen[(yPos + row) * SCREEN_WIDTH + (xPos + col)]; // CHECK WIDTH
