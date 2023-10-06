@@ -1,5 +1,5 @@
 #include "chip8.h"
-#define SCREEN_SCALE 10
+#define SCREEN_SCALE 1
 #define SCREEN_WIDTH 64
 #define SCREEN_HEIGHT 32
 
@@ -245,14 +245,14 @@ void OP_Dxyn(Chip8* chip8)
 
 	chip8->registers[0xF] = 0;
 
-	for (unsigned int row = 0; row < height; row++)
+	for (unsigned short row = 0; row < height; row++)
 	{
-		unsigned int spriteByte = chip8->memory[chip8->index + row];
+		unsigned short spriteByte = chip8->memory[chip8->index + row];
 
-		for (unsigned int col = 0; col < 8; col++)
+		for (unsigned short col = 0; col < 8; col++)
 		{
-			unsigned int spritePixel = spriteByte & (0x80u >> col);
-			unsigned int* screenPixel = &chip8->screen[(yPos + row) * SCREEN_WIDTH + (xPos + col)]; // CHECK WIDTH
+			unsigned short spritePixel = spriteByte & (0x80u >> col);
+			unsigned int* screenPixel = &chip8->screen[(yPos + row) * (SCREEN_WIDTH) + (xPos + col)]; // CHECK WIDTH
 
 			// Sprite pixel is on
 			if (spritePixel)
@@ -405,7 +405,7 @@ void OP_Fx29(Chip8* chip8)
     //Set I = location of sprite for digit Vx.
     unsigned int Vx = (chip8->opcode & 0x0F00u) >> 8u;
     unsigned int digit = chip8->registers[Vx];
-    chip8->index = 0x50 + (5*digit); //FONTSE_START_ADDRESS HARDCODED!
+    chip8->index = 0x50 + (5*digit); //FONTSET_START_ADDRESS HARDCODED!
 }
 
 void OP_Fx33(Chip8* chip8)

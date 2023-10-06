@@ -12,7 +12,7 @@ extern int isRunning;
 int main(int argv, char** args)
 {
     chip8_ptr->pc=0x200;
-    loadRom(chip8_ptr,"test/slipperyslope.ch8");
+    loadRom(chip8_ptr,"test/br8kout.ch8");
     loadFont(chip8_ptr);
     initWindow(chip8_ptr,64,32);
     

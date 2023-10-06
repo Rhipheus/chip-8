@@ -3,7 +3,7 @@
 #include "chip8.h"
 
 int isRunning = 1;
-int scale=10;
+int scale=1;
 
 SDL_Window* win;
 SDL_Renderer* renderer;
