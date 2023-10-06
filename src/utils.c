@@ -130,10 +130,11 @@ int handleInput(Chip8* chip8)
                 chip8->keypad[15]=1;
                 printf("v");
                 break;
+        }
     }
-    
     if(event.type == SDL_KEYUP)
     {
+        printf("heré!");
         switch (event.key.keysym.sym)
         {
          case SDLK_1:
@@ -202,6 +203,5 @@ int handleInput(Chip8* chip8)
             printf(" vup");
             break;
         }
-    }
     }
 }
